@@ -1,16 +1,11 @@
 package org.apx.testing.testelements;
 
 import org.apx.testing.browser.Browser;
-import org.apx.testing.core.Condition;
 import org.apx.testing.elements.HtmlElement;
-import org.apx.testing.elements.SelectElement;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,7 +30,7 @@ public class ElementsTest {
         System.out.println("Elements present: " + els.size());
         //Google services Div
         HtmlElement servicesDiv = b.find().byId("gbwa");
-        servicesDiv.find().bySelector(".gb_Ta a").getWebElement().click();
+        servicesDiv.find().bySelector(".gb_Ta a").event().click();
         HtmlElement alala = servicesDiv.children().get(1);
         b.js().executeScript(FAKE_AJAX);
         alala.waitUntilElement(6).isHidden();
