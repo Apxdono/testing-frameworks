@@ -17,11 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 25.06.14
- * Time: 18:20
- * To change this template use File | Settings | File Templates.
+ * The implementation of {@link org.apx.testing.core.ICommonElementFactory} that uses {@link org.openqa.selenium.WebDriver} to query for elements
  */
 public class ElementFactory implements ICommonElementFactory {
 
@@ -31,7 +27,11 @@ public class ElementFactory implements ICommonElementFactory {
     WebDriver driver;
     LinkedList<QueueAction> actions;
 
-
+    /**
+     * Initialization
+     *
+     * @param b browser to be attached to
+     */
     public ElementFactory(Browser b) {
         browser = b;
         driver = b.getDriver();
@@ -151,7 +151,7 @@ public class ElementFactory implements ICommonElementFactory {
         }
 
         By by = (By) predicate;
-        return wrap(parent.getWebElement().findElement(by), parent);
+        return wrap(parent.webElement().findElement(by), parent);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class ElementFactory implements ICommonElementFactory {
         }
 
         By by = (By) predicate;
-        return wrap(parent.getWebElement().findElements(by), parent);
+        return wrap(parent.webElement().findElements(by), parent);
     }
 
 
@@ -190,24 +190,24 @@ public class ElementFactory implements ICommonElementFactory {
 
     @Override
     public HtmlElement wrap(WebElement we) {
-        return wrap(we,null);
+        return wrap(we, null);
     }
 
-    protected HtmlElement wrap(WebElement we, EFElement parent){
-        HtmlElement p =  parent != null ? (HtmlElement) parent.as(HtmlElement.class) : null;
-        return we != null ? ((EFElement<HtmlElement>) new HtmlElement()).init(browser, we).setParent( p ) : null;
+    protected HtmlElement wrap(WebElement we, EFElement parent) {
+        HtmlElement p = parent != null ? (HtmlElement) parent.as(HtmlElement.class) : null;
+        return we != null ? ((EFElement<HtmlElement>) new HtmlElement()).init(browser, we).setParent(p) : null;
     }
 
     @Override
     public List<HtmlElement> wrap(List<WebElement> wes) {
-        return wrap(wes,null);
+        return wrap(wes, null);
     }
 
-    protected List<HtmlElement> wrap(List<WebElement> wes, EFElement parent){
+    protected List<HtmlElement> wrap(List<WebElement> wes, EFElement parent) {
         if (wes != null && !wes.isEmpty()) {
             List<HtmlElement> res = new ArrayList<HtmlElement>(wes.size());
             for (WebElement we : wes) {
-                res.add(wrap(we,parent));
+                res.add(wrap(we, parent));
             }
             return res;
         }
@@ -265,7 +265,6 @@ public class ElementFactory implements ICommonElementFactory {
         }
         return wait.until(ecw);
     }
-
 
     protected boolean actionsQueued() {
         return !actions.isEmpty();

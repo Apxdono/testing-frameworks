@@ -2,10 +2,7 @@ package org.apx.testing.elements;
 
 import org.apx.testing.browser.Browser;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,14 +34,14 @@ public class State<T extends Element> {
 
     public T isVisible() {
         if(timeout != 0) {
-            return browser.getWait(timeout()).until(ExpectedConditions.visibilityOf(target.getWebElement())) != null ? target : null ;
+            return browser.getWait(timeout()).until(ExpectedConditions.visibilityOf(target.webElement())) != null ? target : null ;
         }
         return target;
     }
 
     public T isClickable() {
         if(timeout != 0) {
-            return browser.getWait(timeout()).until(ExpectedConditions.elementToBeClickable(target.getWebElement())) != null ? target : null;
+            return browser.getWait(timeout()).until(ExpectedConditions.elementToBeClickable(target.webElement())) != null ? target : null;
         }
         return target;
     }
@@ -58,20 +55,20 @@ public class State<T extends Element> {
 
     public void isRemoved(){
         if(timeout != 0) {
-            browser.getWait(timeout()).until(ExpectedConditions.stalenessOf(target.getWebElement()));
+            browser.getWait(timeout()).until(ExpectedConditions.stalenessOf(target.webElement()));
         }
     }
 
     public T hasText(String text){
         if(timeout != 0) {
-            return browser.getWait(timeout()).until(ExpectedConditions.textToBePresentInElement(target.getWebElement(),text)) ? target : null;
+            return browser.getWait(timeout()).until(ExpectedConditions.textToBePresentInElement(target.webElement(),text)) ? target : null;
         }
         return target;
     }
 
     public T hasValue(String text){
         if(timeout != 0) {
-            return browser.getWait(timeout()).until(ExpectedConditions.textToBePresentInElementValue(target.getWebElement(),text)) ? target : null;
+            return browser.getWait(timeout()).until(ExpectedConditions.textToBePresentInElementValue(target.webElement(),text)) ? target : null;
         }
         return target;
     }

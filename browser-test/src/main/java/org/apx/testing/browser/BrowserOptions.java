@@ -7,11 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 1/5/14
- * Time: 10:23 PM
- * To change this template use File | Settings | File Templates.
+ * Browser initialization options
  */
 public class BrowserOptions {
 
@@ -30,6 +26,11 @@ public class BrowserOptions {
 	boolean maximize = false;
 	long ajaxPreWait = 200L;
 
+
+    /**
+     * Initializa browser options. They will later be used during browser startup.
+     * @param properties map of properties
+     */
 	public BrowserOptions(Map<String,String> properties){
 		type = BrowserType.getType(properties.get(BROWSER_TYPE_KEY));
 		queryingType = QueryType.getType(properties.get(QUERYING_TYPE_KEY));

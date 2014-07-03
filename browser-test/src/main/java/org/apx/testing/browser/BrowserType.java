@@ -3,11 +3,7 @@ package org.apx.testing.browser;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 1/5/14
- * Time: 10:22 PM
- * To change this template use File | Settings | File Templates.
+ * Represents supported browser types
  */
 public enum BrowserType {
 	FIREFOX,
@@ -16,6 +12,11 @@ public enum BrowserType {
 	CHROME,
 	IE;
 
+    /**
+     * Get browser type by string name
+     * @param name browser name
+     * @return type of browser
+     */
 	public static BrowserType getType(String name) {
 		BrowserType bt = BrowserType.FIREFOX;
 		try {

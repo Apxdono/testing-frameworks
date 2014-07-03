@@ -21,11 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 1/5/14
- * Time: 10:22 PM
- * To change this template use File | Settings | File Templates.
+ *  Entry point class for testing. Provides all tools for working with browser and elements.
  */
 public class Browser {
     static Logger LOG = LoggerFactory.getLogger(Browser.class);

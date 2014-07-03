@@ -1,12 +1,14 @@
 package org.apx.testing.browser;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 1/6/14
- * Time: 3:25 AM
- * To change this template use File | Settings | File Templates.
+ * Interface that provides ability to wait for some events to occur. Wraps around Expected condition in WebDriver
  */
 public interface Check {
+
+    /**
+     * Check some condition and provide a boolean result
+     * @param browser caller browser instance
+     * @return true or false depending on the checks
+     */
 	Boolean check(Browser browser);
 }

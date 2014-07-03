@@ -3,13 +3,13 @@ package org.apx.testing.elements;
 import org.apx.testing.elements.interfaces.IOption;
 
 /**
- * Created by oleg on 02.07.2014.
+ * Implementation for html elements with tag 'option'
  */
 public class OptionElement extends Element<OptionElement, BaseEvent<OptionElement>> implements IOption<OptionElement> {
 
     @Override
     public OptionElement select() {
-        if(!this.getWebElement().isSelected()){
+        if(!this.webElement().isSelected()){
             this.event().click();
         }
         return this;
@@ -18,7 +18,7 @@ public class OptionElement extends Element<OptionElement, BaseEvent<OptionElemen
     @Override
     public OptionElement deselect() {
 
-        if(this.getWebElement().isSelected()){
+        if(this.webElement().isSelected()){
             return this.event().click();
         }
         return this;

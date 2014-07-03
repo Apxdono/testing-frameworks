@@ -6,11 +6,7 @@ import org.apx.testing.core.ICommonElementFactory;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 01.07.14
- * Time: 13:45
- * To change this template use File | Settings | File Templates.
+ * an internal implementation of element search factory
  */
 class ElementFactoryLocal implements IBasicElementFactory {
 

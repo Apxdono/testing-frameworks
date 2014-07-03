@@ -5,8 +5,9 @@ import org.apx.testing.elements.HtmlElement;
 import org.openqa.selenium.WebElement;
 
 /**
-  * Faking "orgasms" (IYKWIM) here. (Friendly functions)
-  */
+ * A class that is used by Element factories. Provides ways to fake "orgasms" aka "friendly functions" in C. <br/>
+ * Contains basic things required for all elements and factories
+ */
 public abstract class EFElement<T> {
 
     protected Browser owner;
@@ -14,24 +15,57 @@ public abstract class EFElement<T> {
     protected String cssSelector;
     protected HtmlElement parent;
 
-    protected abstract T init(Browser browser,WebElement element);
+    /**
+     * Init a new instance of an element
+     * @param browser owner browser
+     * @param element actual web driver's element
+     * @return self reference
+     * @see org.openqa.selenium.WebElement
+     */
+    protected abstract T init(Browser browser, WebElement element);
 
-    protected T setParent(HtmlElement p){
+
+    /**
+     * Used when querying in other element context. Allows to skip further search of parent later on
+     * @param p parent element
+     * @return self reference
+     */
+    protected T setParent(HtmlElement p) {
         parent = p;
         return (T) this;
     }
 
-    protected T init(EFElement element){
-        if( element == null) return null;
+    /**
+     * Init a new element using another one's precalculated data
+     * @param element donor element
+     * @return self reference
+     */
+    protected T init(EFElement element) {
+        if (element == null) return null;
         this.owner = element.owner;
         this.cssSelector = element.cssSelector;
         this.target = element.target;
         return (T) this;
     }
 
-    public abstract WebElement getWebElement();
+    /**
+     * Get the actual web drivers' element
+     * @return web element instance
+     * @see org.openqa.selenium.WebElement
+     */
+    public abstract WebElement webElement();
 
-    public abstract  <E extends EFElement> E as(Class<E> eClass);
+    /**
+     * Convert current element to another element type. <br/>
+     * Useful method gives you a new element instance with given type which provide additional <br/>
+     * methods and features that can make element manipulations easies.
+     * @param eClass the target element class type
+     * @param <E> element type to be returned
+     * @return new element with give type or null
+     */
+    public abstract <E extends EFElement> E as(Class<E> eClass);
+
+
 
     @Override
     public boolean equals(Object o) {

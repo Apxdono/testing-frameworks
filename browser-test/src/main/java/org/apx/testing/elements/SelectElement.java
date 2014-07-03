@@ -6,11 +6,7 @@ import org.apx.testing.elements.interfaces.ISelect;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 25.06.14
- * Time: 17:46
- * To change this template use File | Settings | File Templates.
+ * Implementation of 'select' element
  */
 public class SelectElement extends Element<SelectElement, BaseEvent<SelectElement>> implements ISelect<SelectElement, OptionElement> {
 

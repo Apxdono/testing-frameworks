@@ -1,13 +1,7 @@
 package org.apx.testing.core;
 
-import org.openqa.selenium.By;
-
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 01.07.14
- * Time: 14:23
- * To change this template use File | Settings | File Templates.
+ * Used to create a queue of delays when calling one of untilConditon methods in {@link org.apx.testing.core.ICommonElementFactory}
  */
 class QueueAction {
     Condition condition;

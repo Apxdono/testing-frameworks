@@ -3,15 +3,18 @@ package org.apx.testing.browser;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created with IntelliJ IDEA.
- * User: oleg
- * Date: 1/5/14
- * Time: 10:23 PM
- * To change this template use File | Settings | File Templates.
+ * Represents the type of querying for web elements. Currently only WEBDRIVER is supported.<br/>
+ * But this is an extension that can provide other methods for element search.
  */
 public enum QueryType {
 	WEBDRIVER,
 	JQUERY;
+
+    /**
+     * Calculate the querying type
+     * @param name string representation of type name
+     * @return actual type
+     */
 	public static QueryType getType(String name) {
 		QueryType bt = QueryType.WEBDRIVER;
 		try {

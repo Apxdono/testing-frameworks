@@ -36,7 +36,7 @@ public class ElementsTest {
     @Test
     public void browserTest() throws InterruptedException {
         //Go to google and query for 'Cheese!'
-        HtmlElement el = b.get("http://www.google.com").find().byName("q").val("Cheese!");
+        HtmlElement el = b.get("http://www.google.com").find().untilPresent().byName("q").val("Cheese!").as(SelectElement.class).as(HtmlElement.class);
         Assert.assertEquals("q", el.formName());
 
         //See how many results google suggests

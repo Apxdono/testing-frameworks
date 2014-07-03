@@ -3,7 +3,7 @@ package org.apx.testing.elements;
 import org.openqa.selenium.Keys;
 
 /**
- * Created by oleg on 02.07.2014.
+ * Base events o a common element
  */
 public class BaseEvent<T extends Element> {
 
@@ -13,13 +13,21 @@ public class BaseEvent<T extends Element> {
         target = el;
     }
 
+    /**
+     * Perform a click on an element
+     * @return element reference
+     */
     public T click(){
-        target.getWebElement().click();
+        target.webElement().click();
         return target;
     }
 
+    /**
+     * Perform a press of ENTER on an element
+     * @return element reference
+     */
     public T enter(){
-        target.getWebElement().sendKeys(Keys.ENTER);
+        target.webElement().sendKeys(Keys.ENTER);
         return target;
     }
 
