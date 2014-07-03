@@ -75,9 +75,8 @@ public class SelectElement extends Element<SelectElement, BaseEvent<SelectElemen
     }
 
     @Override
-    public List<OptionElement> getOptions() {
-//        return this.find().bySelectorAll("option");
-        return null;
+    public List<OptionElement> options() {
+        return owner.find().allAs(this.find().bySelectorAll("option"), OptionElement.class);
     }
 
     @Override

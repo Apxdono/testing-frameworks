@@ -37,6 +37,10 @@ public interface ICommonElementFactory extends IBasicElementFactory {
 
     List<HtmlElement> wrap(List<WebElement> wes);
 
+    <E extends EFElement> E as(EFElement element, Class<E> targetClass);
+
+    <E extends EFElement,T extends EFElement> List<E> allAs(List<T> elements, Class<E> targetClass);
+
     ICommonElementFactory untilVisible();
 
     ICommonElementFactory untilVisible(int timeout);

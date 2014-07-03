@@ -1,10 +1,8 @@
 package org.apx.testing.core;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apx.testing.browser.Browser;
 import org.apx.testing.elements.HtmlElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -37,7 +35,7 @@ public class ElementFactory implements ICommonElementFactory {
     public ElementFactory(Browser b) {
         browser = b;
         driver = b.getDriver();
-        actions = new LinkedList<QueueAction>();
+        actions = new LinkedList<>();
     }
 
     /*Simple search methods*/
@@ -84,7 +82,7 @@ public class ElementFactory implements ICommonElementFactory {
             return null;
         }
         By by = (By) predicate;
-        if(actionsQueued()){
+        if (actionsQueued()) {
             return wrap(performSingleElementAction(by));
         } else {
             return wrap(driver.findElement(by));
@@ -100,7 +98,7 @@ public class ElementFactory implements ICommonElementFactory {
 
         By by = (By) predicate;
 
-        if(actionsQueued()){
+        if (actionsQueued()) {
             return wrap(performMultipleElementsAction(by));
         } else {
             return wrap(driver.findElements(by));
@@ -153,7 +151,7 @@ public class ElementFactory implements ICommonElementFactory {
         }
 
         By by = (By) predicate;
-        return wrap(parent.getWebElement().findElement(by));
+        return wrap(parent.getWebElement().findElement(by), parent);
     }
 
     @Override
@@ -164,7 +162,7 @@ public class ElementFactory implements ICommonElementFactory {
         }
 
         By by = (By) predicate;
-        return wrap(parent.getWebElement().findElements(by));
+        return wrap(parent.getWebElement().findElements(by), parent);
     }
 
 
@@ -192,19 +190,48 @@ public class ElementFactory implements ICommonElementFactory {
 
     @Override
     public HtmlElement wrap(WebElement we) {
-        return we != null ? ((EFElement<HtmlElement>) new HtmlElement()).init(browser, we) : null;
+        return wrap(we,null);
+    }
+
+    protected HtmlElement wrap(WebElement we, EFElement parent){
+        HtmlElement p =  parent != null ? (HtmlElement) parent.as(HtmlElement.class) : null;
+        return we != null ? ((EFElement<HtmlElement>) new HtmlElement()).init(browser, we).setParent( p ) : null;
     }
 
     @Override
     public List<HtmlElement> wrap(List<WebElement> wes) {
+        return wrap(wes,null);
+    }
+
+    protected List<HtmlElement> wrap(List<WebElement> wes, EFElement parent){
         if (wes != null && !wes.isEmpty()) {
             List<HtmlElement> res = new ArrayList<HtmlElement>(wes.size());
             for (WebElement we : wes) {
-                res.add(wrap(we));
+                res.add(wrap(we,parent));
             }
             return res;
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public <E extends EFElement> E as(EFElement element, Class<E> targetClass) {
+        try {
+            return (E) targetClass.newInstance().init(element);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public <E extends EFElement, T extends EFElement> List<E> allAs(List<T> elements, Class<E> targetClass) {
+        if (elements == null || elements.isEmpty()) return Collections.emptyList();
+        List<E> result = new ArrayList<>(elements.size());
+        for (EFElement element : elements) {
+            result.add(this.as(element, targetClass));
+        }
+        return result;
     }
 
     protected WebElement performSingleElementAction(By predicate) {
@@ -240,7 +267,7 @@ public class ElementFactory implements ICommonElementFactory {
     }
 
 
-    protected boolean actionsQueued(){
+    protected boolean actionsQueued() {
         return !actions.isEmpty();
     }
 }

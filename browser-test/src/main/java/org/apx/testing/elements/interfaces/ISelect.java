@@ -29,6 +29,6 @@ public interface ISelect<SelfType, OptType> {
 
     SelfType deselectAll();
 
-    List<OptType> getOptions();
+    List<OptType> options();
 
 }

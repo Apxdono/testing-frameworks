@@ -21,12 +21,9 @@ import java.util.List;
  */
 abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEvent<SelfType>> extends EFElement<SelfType> {
 
-    Browser owner;
-    WebElement target;
-    String cssSelector;
-    IBasicElementFactory localFactory;
-    State<SelfType> state;
-    EV events;
+    protected IBasicElementFactory localFactory;
+    protected State<SelfType> state;
+    protected EV events;
 
     @Override
     public WebElement getWebElement(){
@@ -108,7 +105,10 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
 
 
     public HtmlElement parent(){
-        return owner.find().wrap((WebElement) jsRet(Attributes.PARENT_NODE));
+        if(parent == null){
+            parent = owner.find().wrap((WebElement) jsRet(Attributes.PARENT_NODE));
+        }
+        return parent;
     }
 
     public HtmlElement prev(){
@@ -123,6 +123,10 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
         return find().byXpathAll("*");
     }
 
+    public HtmlElement child(int index) {
+        return  find().byXpath(String.format("*[position()=%d]",index+1));
+    }
+
     public List<HtmlElement> siblings(){
         return Collections.emptyList();
     }
@@ -131,21 +135,16 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
         return (SelfType) owner.find().bySelector(cssSelector()).as(getClass());
     }
 
-    public <E extends Element> E as(Class<E> eClass){
-        try {
-            //TODO modify for reuse of parameters
-            return (E) eClass.newInstance().init(owner,target);
-        } catch (Exception e) {
-            LoggerFactory.getLogger(getClass()).error("Error transforming element to class '{}'",eClass);
-        }
-        return null;
+    @Override
+    public <E extends EFElement> E as(Class<E> eClass){
+        return owner.find().as(this, eClass);
     }
-
 
 
      /* INNER METHODS AND CLASSES*/
 
     protected String evalSelector() {
+        LoggerFactory.getLogger(getClass()).info("evaluating css selector");
         ScriptLoader.loadFunction(owner, "fullPath");
         return (String) owner.js().executeScript("return fullPath(arguments[0]);", this.target);
     }
@@ -168,6 +167,13 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
         return (SelfType) this;
     }
 
+    @Override
+    protected SelfType init(EFElement element){
+        super.init(element);
+        initEvents();
+        return (SelfType) this;
+    }
+
     protected abstract void initEvents();
 
     protected static class Attributes{
@@ -185,5 +191,6 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
 
         }
     }
+
 
 }
