@@ -11,7 +11,7 @@ First steps
 
 
 Before using this library you should prepare your system environment.
-The main browsers that were tested are: Chrome/Chromium, Firefox, Internet explorer v8.0 and Opera v 12.15.
+The main browsers that were tested are: Chrome/Chromium, Firefox, Internet explorer v9.0 and Opera v 12.15 build 1748 (keep in mind opera driver is not a selenium team development so it's a bit buggy and unstable) .
 Make sure that you installed the correct version of your browser and proceed to Setup section.
 
 Setup
