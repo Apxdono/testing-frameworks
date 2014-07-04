@@ -21,10 +21,6 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
     protected State<SelfType> state;
     protected EV events;
 
-    @Override
-    public WebElement webElement() {
-        return target;
-    }
 
     /**
      * Get an element's factory for finding elements using current element as a base of search

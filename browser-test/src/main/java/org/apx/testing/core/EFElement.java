@@ -49,11 +49,23 @@ public abstract class EFElement<T> {
     }
 
     /**
+     * Get the owner browser reference
+     * @return browser ref
+     */
+    public Browser browser(){
+        return owner;
+    }
+
+
+    /**
      * Get the actual web drivers' element
      * @return web element instance
      * @see org.openqa.selenium.WebElement
      */
-    public abstract WebElement webElement();
+    public WebElement webElement() {
+        return target;
+    }
+
 
     /**
      * Convert current element to another element type. <br/>

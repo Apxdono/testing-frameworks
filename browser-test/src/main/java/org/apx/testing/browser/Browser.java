@@ -3,6 +3,7 @@ package org.apx.testing.browser;
 import com.opera.core.systems.OperaDriver;
 import org.apx.testing.core.ElementFactory;
 import org.apx.testing.core.ICommonElementFactory;
+import org.apx.testing.elements.HtmlElement;
 import org.apx.testing.utils.Messages;
 import org.apx.testing.utils.PropertiesLoader;
 import org.openqa.selenium.JavascriptExecutor;
@@ -18,6 +19,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -118,6 +121,33 @@ public class Browser {
         }
         return this;
     }
+
+    public Browser switchToTab(int index){
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(index));
+        return this;
+    }
+
+    public Browser switchToFrame(int index){
+        driver.switchTo().frame(index);
+        return this;
+    }
+
+    public Browser switchToFrame(String frame){
+        driver.switchTo().frame(frame);
+        return this;
+    }
+
+    public Browser switchToFrame(HtmlElement frame){
+        driver.switchTo().frame(frame.webElement());
+        return this;
+    }
+
+    public Browser switchBackFromFrame(){
+        driver.switchTo().defaultContent();
+        return this;
+    }
+
 
     /**
      * Build a web driver wait
