@@ -19,6 +19,11 @@ public class BaseEvent<T extends Element> {
      */
     public T click(){
         target.webElement().click();
+        String tag = target.tagName();
+//        if("a".equals(tag) || "button".equals(tag)){
+//            System.out.println("Waiting for page load");
+//            target.browser().waitForPageLoad();
+//        }
         return target;
     }
 
@@ -28,6 +33,8 @@ public class BaseEvent<T extends Element> {
      */
     public T enter(){
         target.webElement().sendKeys(Keys.ENTER);
+//        System.out.println("Waiting for page load");
+//        target.browser().waitForPageLoad();
         return target;
     }
 
