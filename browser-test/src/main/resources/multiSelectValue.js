@@ -1,0 +1,1 @@
+window["multiSelectValue"]=function(e){var t=[];var n=e.options||[];for(var r=0;r<n.length;r++){if(n[r].selected){t.push(n[r].value)}}return t.join(' ')}

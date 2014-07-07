@@ -24,7 +24,7 @@ public class ElementFactory implements ICommonElementFactory {
     static Logger LOG = LoggerFactory.getLogger(ElementFactory.class);
     static int DEFAULT_TIMEOUT = 5;
     Browser browser;
-    WebDriver driver;
+//    WebDriver driver;
     LinkedList<QueueAction> actions;
 
     /**
@@ -34,7 +34,6 @@ public class ElementFactory implements ICommonElementFactory {
      */
     public ElementFactory(Browser b) {
         browser = b;
-        driver = b.getDriver();
         actions = new LinkedList<>();
     }
 
@@ -85,7 +84,7 @@ public class ElementFactory implements ICommonElementFactory {
         if (actionsQueued()) {
             return wrap(performSingleElementAction(by));
         } else {
-            return wrap(driver.findElement(by));
+            return wrap(browser.getDriver().findElement(by));
         }
     }
 
@@ -101,7 +100,7 @@ public class ElementFactory implements ICommonElementFactory {
         if (actionsQueued()) {
             return wrap(performMultipleElementsAction(by));
         } else {
-            return wrap(driver.findElements(by));
+            return wrap(browser.getDriver().findElements(by));
         }
     }
 

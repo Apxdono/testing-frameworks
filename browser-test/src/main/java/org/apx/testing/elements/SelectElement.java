@@ -129,11 +129,21 @@ public class SelectElement extends Element<SelectElement, BaseEvent<SelectElemen
 
     @Override
     public String val() {
-        //Sometimes in multiselects value attribute returns only first selected option. this is a workaround
+        //Sometimes in multiselects value attribute returns only first selected option. The reason is not clear to me so this is a workaround 4 now
         if("true".equalsIgnoreCase((attr("multiple") + "").trim())){
             ScriptLoader.loadFunction(owner, "multiSelectValue");
             return (String) owner.js().executeScript("return multiSelectValue(arguments[0]);",this.webElement());
         }
         return super.val();
+    }
+
+    @Override
+    public SelectElement val(String value) {
+        throw new UnsupportedOperationException("Method not supported. Please use select methods provided in SelectElement class");
+    }
+
+    @Override
+    public SelectElement val(String value, boolean append) {
+        throw new UnsupportedOperationException("Method not supported. Please use select methods provided in SelectElement class");
     }
 }

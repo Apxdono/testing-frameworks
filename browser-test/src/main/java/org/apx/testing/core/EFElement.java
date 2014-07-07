@@ -98,4 +98,13 @@ public abstract class EFElement<T> {
         result = 31 * result + target.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "{owner=" + owner +
+//                ", target=" + target +
+                ", cssSelector='" + cssSelector + '\'' +
+                '}';
+    }
 }

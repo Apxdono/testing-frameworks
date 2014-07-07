@@ -56,6 +56,10 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
 
     /* ATTRIBUTES AND STUFF*/
 
+    public String tagName(){
+        return target.getTagName().toLowerCase();
+    }
+
     /**
      * Get element id
      * @return id of an element

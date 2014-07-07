@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -57,7 +58,7 @@ public class ElementsTest {
         //Fake ajax here. wait to submit result only after services panel is closed (aka ajax update style)
         b.js().executeScript(FAKE_AJAX);
         servicesDiv.child(1).waitUntilElement(6).isHidden();
-        el.event().enter();
+//        el.event().enter();
     }
 
 
@@ -72,14 +73,20 @@ public class ElementsTest {
 
         //Go to w3schools at multiselect example page. click 'Try it !' and get the select
          b.get("http://www.w3schools.com/tags/att_select_multiple.asp").find().bySelector(".example a.tryitbtn").event().click();
+        b.switchToTab(1).hold(5);
+        List l = b.find().bySelectorAll("iframe");
 
-        SelectElement seMul  = b.switchToTab(1).switchToFrame("iframeResult").find().byName("cars").as(SelectElement.class);
+        LOG.info("Total frames {}. Actual arguments",l.size());
+        for (Object o : l) {
+            LOG.info(o.toString());
+        }
+
+        SelectElement seMul  = b.switchToFrameWithId("iframeResult").find().byName("cars").as(SelectElement.class);
         assertEquals(seMul.selectAllAt(new int[]{0, 1, 3}).val().trim(),"volvo saab audi");
         b.switchBackFromFrame();
     }
 
 
-    @Test
     @Ignore
     public void frameTest(){
         WebDriver driver = new ChromeDriver();

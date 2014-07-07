@@ -22,9 +22,10 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
- *  Entry point class for testing. Provides all tools for working with browser and elements.
+ * Entry point class for testing. Provides all tools for working with browser and elements.
  */
 public class Browser {
     static Logger LOG = LoggerFactory.getLogger(Browser.class);
@@ -72,6 +73,7 @@ public class Browser {
      * @return self-reference
      */
     public Browser get(String url) {
+//        waitForPageLoad();
         driver.get(url);
         return this;
     }
@@ -122,29 +124,36 @@ public class Browser {
         return this;
     }
 
-    public Browser switchToTab(int index){
+    public Browser switchToTab(int index) {
         List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(index));
+        driver = driver.switchTo().window(tabs.get(index));
         return this;
     }
 
-    public Browser switchToFrame(int index){
-        driver.switchTo().frame(index);
+    public Browser switchToFrame(int index) {
+        if(options.type.equals(BrowserType.OPERA)){
+            return switchToFrame(find().bySelectorAll("iframe").get(index));
+        }
+        driver = driver.switchTo().frame(index);
         return this;
     }
 
-    public Browser switchToFrame(String frame){
-        driver.switchTo().frame(frame);
+    public Browser switchToFrameWithId(String frame) {
+        LOG.info(driver.getPageSource());
+        return switchToFrame(find().byId(frame));
+    }
+
+    public Browser switchToFrameWithName(String frame) {
+        return switchToFrame(find().byName(frame));
+    }
+
+    public Browser switchToFrame(HtmlElement frame) {
+        driver = driver.switchTo().frame(frame.webElement());
         return this;
     }
 
-    public Browser switchToFrame(HtmlElement frame){
-        driver.switchTo().frame(frame.webElement());
-        return this;
-    }
-
-    public Browser switchBackFromFrame(){
-        driver.switchTo().defaultContent();
+    public Browser switchBackFromFrame() {
+        driver = driver.switchTo().defaultContent();
         return this;
     }
 
@@ -225,6 +234,19 @@ public class Browser {
         return this;
     }
 
+    public Browser waitForPageLoad() {
+        ExpectedCondition<Boolean> pageLoadCondition = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+                    }
+                };
+
+        getWait(10).until(pageLoadCondition);
+
+        return this;
+    }
+
     /**
      * Initialize the browser
      *
@@ -241,6 +263,7 @@ public class Browser {
         if (options.maximize && !options.type.equals(BrowserType.OPERA)) {
             driver.manage().window().maximize();
         }
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         manageShutdownOnJVMStop();
         return this;
     }
@@ -256,7 +279,7 @@ public class Browser {
                 break;
             case OPERA:
                 DesiredCapabilities dc = DesiredCapabilities.opera();
-//                dc.setCapability("opera.idle", true);
+                dc.setCapability("opera.idle", true);
                 result = new OperaDriver(dc);
                 break;
             case SAFARI:
