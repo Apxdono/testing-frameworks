@@ -73,7 +73,6 @@ public class Browser {
      * @return self-reference
      */
     public Browser get(String url) {
-//        waitForPageLoad();
         driver.get(url);
         return this;
     }
@@ -131,22 +130,23 @@ public class Browser {
     }
 
     public Browser switchToFrame(int index) {
-        if(options.type.equals(BrowserType.OPERA)){
-            return switchToFrame(find().bySelectorAll("iframe").get(index));
-        }
         driver = driver.switchTo().frame(index);
         return this;
     }
 
-    public Browser switchToFrameWithId(String frame) {
-        LOG.info(driver.getPageSource());
-        return switchToFrame(find().byId(frame));
+    public Browser switchToFrame(String frame) {
+        driver = driver.switchTo().frame(frame);
+        return this;
     }
 
-    public Browser switchToFrameWithName(String frame) {
-        return switchToFrame(find().byName(frame));
-    }
-
+    /**
+     * Switch to found frame and start working with it's elements. <br/>
+     * Note that opera currently is buggy with switching to frames
+     * @param frame to be switched to
+     * @return self reference
+     * @see  <a href="https://github.com/operasoftware/operadriver/issues/103">Opera frame issue</a>
+     *
+     */
     public Browser switchToFrame(HtmlElement frame) {
         driver = driver.switchTo().frame(frame.webElement());
         return this;

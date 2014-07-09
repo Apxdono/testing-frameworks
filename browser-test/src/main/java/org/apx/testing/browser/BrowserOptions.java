@@ -28,7 +28,7 @@ public class BrowserOptions {
 
 
     /**
-     * Initializa browser options. They will later be used during browser startup.
+     * Initialize browser options. They will later be used during browser startup.
      * @param properties map of properties
      */
 	public BrowserOptions(Map<String,String> properties){
@@ -49,7 +49,31 @@ public class BrowserOptions {
 		}
 	}
 
-	@Override
+    public BrowserType getType() {
+        return type;
+    }
+
+    public QueryType getQueryingType() {
+        return queryingType;
+    }
+
+    public boolean isRemoteDriver() {
+        return remoteDriver;
+    }
+
+    public boolean isCloseOnJVMStop() {
+        return closeOnJVMStop;
+    }
+
+    public boolean isMaximize() {
+        return maximize;
+    }
+
+    public long getAjaxPreWait() {
+        return ajaxPreWait;
+    }
+
+    @Override
 	public String toString() {
 		return "Browser options{" +
 				"type=" + type +

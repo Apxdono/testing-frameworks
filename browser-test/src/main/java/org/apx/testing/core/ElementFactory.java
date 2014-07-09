@@ -193,8 +193,8 @@ public class ElementFactory implements ICommonElementFactory {
     }
 
     protected HtmlElement wrap(WebElement we, EFElement parent) {
-        HtmlElement p = parent != null ? (HtmlElement) parent.as(HtmlElement.class) : null;
-        return we != null ? ((EFElement<HtmlElement>) new HtmlElement()).init(browser, we).setParent(p) : null;
+//        HtmlElement p = parent != null ? (HtmlElement) parent.as(HtmlElement.class) : null;
+        return we != null ? ((EFElement<HtmlElement>) new HtmlElement()).init(browser, we) : null;
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * An abstraction of Web element with handy methods and stuff. Used by elements only
  */
-abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEvent<SelfType>> extends EFElement<SelfType> {
+public abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEvent<SelfType>> extends EFElement<SelfType> {
 
     protected IBasicElementFactory localFactory;
     protected State<SelfType> state;
@@ -199,11 +199,11 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
 
     /**
      * Get specific child of this element
-     * @param index child position
+     * @param index child position (1 - based)
      * @return element or null
      */
     public HtmlElement child(int index) {
-        return find().byXpath(String.format("*[position()=%d]", index + 1));
+        return find().byXpath(String.format("*[position()=%d]", index));
     }
 
     /**
@@ -231,7 +231,7 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
      /* INNER METHODS AND CLASSES*/
 
     protected String evalSelector() {
-        LoggerFactory.getLogger(getClass()).info("evaluating css selector");
+//        LoggerFactory.getLogger(getClass()).info("evaluating css selector");
         ScriptLoader.loadFunction(owner, "fullPath");
         return (String) owner.js().executeScript("return fullPath(arguments[0]);", this.target);
     }
@@ -246,7 +246,7 @@ abstract class Element<SelfType extends Element<SelfType, EV>, EV extends BaseEv
 
     @Override
     protected SelfType init(Browser browser, WebElement element) {
-        LoggerFactory.getLogger(getClass()).info("initialized");
+//        LoggerFactory.getLogger(getClass()).info("initialized");
         owner = browser;
         target = element;
         cssSelector = evalSelector();

@@ -1,21 +1,11 @@
 package org.apx.testing.testelements;
 
-import org.apx.testing.browser.Browser;
 import org.apx.testing.elements.HtmlElement;
 import org.apx.testing.elements.SelectElement;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -28,19 +18,9 @@ import static org.junit.Assert.*;
  * Time: 17:35
  * To change this template use File | Settings | File Templates.
  */
-public class ElementsTest {
-
-    static Logger LOG = LoggerFactory.getLogger(ElementsTest.class);
-
-    static String FAKE_AJAX = "setTimeout(function(){document.querySelector('.gb_Ta a').click()},4000);";
+public class ElementsTest extends AbstractTest {
+    static String FAKE_AJAX = "setTimeout(function(){document.querySelector('#gbwa > div > a').click()},4000);";
     static String ELEMENTS_PAGE = "https://www.cs.tut.fi/~jkorpela/www/testel.html";
-
-    Browser b;
-
-    @Before
-    public void init(){
-        b = Browser.instance();
-    }
 
     @Test
     public void browserTest() throws InterruptedException {
@@ -50,46 +30,39 @@ public class ElementsTest {
 
         //See how many results google suggests
         List<HtmlElement> els = b.find().untilVisible().bySelectorAll(".gsq_a");
-        LOG.info("Element selector '{}' . Total suggestions '{}'", el.cssSelector() , els.size());
+        LOG.info("Element selector '{}' . Total suggestions '{}'", el.cssSelector(), els.size());
 
         //open Google services by pressing tile button
-        HtmlElement servicesDiv = b.find().byId("gbwa").find().bySelector(".gb_Ta a").event().click().parent();
+        HtmlElement servicesDiv = b.find().byId("gbwa").find().bySelector("div > a").event().click().parent();
 
-        //Fake ajax here. wait to submit result only after services panel is closed (aka ajax update style)
+        //Fake ajax here. wait to submit result only after services panel is closed (aka ajax update style). Then clcik the wiki link 4 cheese
         b.js().executeScript(FAKE_AJAX);
         servicesDiv.child(1).waitUntilElement(6).isHidden();
-//        el.event().enter();
+        el.event().enter().browser().find().untilVisible(4).bySelector("#ires a:first-child").event().click();
+
     }
 
 
     @Test
-    public void selectElementPlusFrameAndTabTest(){
+    public void selectElementPlusFrameAndTabTest() {
         //go to page and get single select
-        SelectElement se  = b.get(ELEMENTS_PAGE).find().bySelector("#f10").as(SelectElement.class);
+        SelectElement se = b.get(ELEMENTS_PAGE).find().bySelector("#f10").as(SelectElement.class);
         assertEquals(se.children(), se.options());
-        assertEquals(se.child(0), se.options().get(0));
+        assertEquals(se.child(1), se.options().get(0));
         assertEquals(se.selectAt(0).val().trim(), "one");
         LOG.info("Current value selected '{}'", se.val());
 
         //Go to w3schools at multiselect example page. click 'Try it !' and get the select
-         b.get("http://www.w3schools.com/tags/att_select_multiple.asp").find().bySelector(".example a.tryitbtn").event().click();
-        b.switchToTab(1).hold(5);
-        List l = b.find().bySelectorAll("iframe");
-
-        LOG.info("Total frames {}. Actual arguments",l.size());
-        for (Object o : l) {
-            LOG.info(o.toString());
-        }
-
-        SelectElement seMul  = b.switchToFrameWithId("iframeResult").find().byName("cars").as(SelectElement.class);
-        assertEquals(seMul.selectAllAt(new int[]{0, 1, 3}).val().trim(),"volvo saab audi");
+        b.get("http://www.w3schools.com/tags/att_select_multiple.asp").find().bySelector(".example a.tryitbtn").event().click();
+        SelectElement seMul = b.switchToTab(1).switchToFrame("iframeResult").find().byName("cars").as(SelectElement.class);
+        assertEquals(seMul.selectAllAt(new int[]{0, 1, 3}).val().trim(), "volvo saab audi");
         b.switchBackFromFrame();
     }
 
 
     @Ignore
-    public void frameTest(){
-        WebDriver driver = new ChromeDriver();
+    public void frameTest() {
+        WebDriver driver = b.getDriver();
         driver.get("http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple");
 
         driver.switchTo().frame("iframeResult");
@@ -102,6 +75,5 @@ public class ElementsTest {
         LOG.info(body.getTagName());
         driver.quit();
     }
-
 
 }

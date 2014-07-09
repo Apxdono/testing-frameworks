@@ -1,5 +1,6 @@
 package org.apx.testing.elements;
 
+import org.apx.testing.browser.ScriptLoader;
 import org.openqa.selenium.Keys;
 
 /**
@@ -9,7 +10,7 @@ public class BaseEvent<T extends Element> {
 
     T target;
 
-    protected BaseEvent(T el){
+    public BaseEvent(T el){
         target = el;
     }
 
@@ -19,11 +20,16 @@ public class BaseEvent<T extends Element> {
      */
     public T click(){
         target.webElement().click();
-        String tag = target.tagName();
-//        if("a".equals(tag) || "button".equals(tag)){
-//            System.out.println("Waiting for page load");
-//            target.browser().waitForPageLoad();
-//        }
+        return target;
+    }
+
+    /**
+     * Perform a double click on an element
+     * @return element reference
+     */
+    public T dblclick(){
+        ScriptLoader.loadFunction(target.browser(),"triggerEvent");
+        target.browser().js().executeScript("triggerEvent(arguments[0],'dblclick')", target.webElement());
         return target;
     }
 
@@ -33,8 +39,6 @@ public class BaseEvent<T extends Element> {
      */
     public T enter(){
         target.webElement().sendKeys(Keys.ENTER);
-//        System.out.println("Waiting for page load");
-//        target.browser().waitForPageLoad();
         return target;
     }
 

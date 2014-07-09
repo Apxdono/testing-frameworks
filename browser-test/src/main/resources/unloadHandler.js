@@ -1,0 +1,1 @@
+window['windowUnloaded'] = false;Event.add(window, 'unload', function(e){ window['windowUnloaded'] = true; });

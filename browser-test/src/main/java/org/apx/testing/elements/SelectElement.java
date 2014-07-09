@@ -34,14 +34,14 @@ public class SelectElement extends Element<SelectElement, BaseEvent<SelectElemen
 
     @Override
     public SelectElement selectAt(int index) {
-        options().get(index).select();
+        options().get(index-1).select();
         return this;
     }
 
     @Override
     public SelectElement selectAllAt(int[] indexes) {
         for (int index : indexes) {
-            options().get(index).select();
+            options().get(index-1).select();
         }
         return this;
     }

@@ -28,15 +28,15 @@ public interface ISelect<SelfType, OptType> {
     SelfType selectAll(List<IOption> option);
 
     /**
-     * Select option at index (from 0)
-     * @param index
+     * Select option at index
+     * @param index  1 based
      * @return self reference
      */
     SelfType selectAt(int index);
 
     /**
      * Select options at indexes (for selects with multiple attribute)
-     * @param indexes
+     * @param indexes 1 based
      * @return self reference
      */
     SelfType selectAllAt(int[] indexes);

@@ -87,7 +87,7 @@ public abstract class EFElement<T> {
         EFElement efElement = (EFElement) o;
 
         if (!owner.equals(efElement.owner)) return false;
-        if (!target.equals(efElement.target)) return false;
+        if (!cssSelector.equals(efElement.cssSelector)) return false;
 
         return true;
     }
@@ -95,7 +95,7 @@ public abstract class EFElement<T> {
     @Override
     public int hashCode() {
         int result = owner.hashCode();
-        result = 31 * result + target.hashCode();
+        result = 31 * result + cssSelector.hashCode();
         return result;
     }
 
@@ -103,7 +103,6 @@ public abstract class EFElement<T> {
     public String toString() {
         return getClass().getSimpleName() +
                 "{owner=" + owner +
-//                ", target=" + target +
                 ", cssSelector='" + cssSelector + '\'' +
                 '}';
     }
