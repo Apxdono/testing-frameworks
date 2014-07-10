@@ -46,6 +46,7 @@ public class TableTests extends AbstractTest {
             LOG.info("{}\t{}\t{}",i,cols.get(0).text(),cols.get(1).text());
         }
         LOG.info(t.text());
+	    b.switchBackFromFrame();
 
     }
 }
