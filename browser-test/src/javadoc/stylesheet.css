@@ -10,7 +10,7 @@ body {
 	margin:0 auto;
 	font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
 	font-size:12px;
-	padding:0em 2em;
+	padding:0 2em;
 	color:#333;
 
  }
@@ -40,7 +40,7 @@ h1 {
 	color:#182737;
 	font-size:2em;
 	padding:1.5em;
-	margin-top: 0px;
+	margin-top: 0;
 	text-align:left;
 }
 

@@ -7,5 +7,5 @@ package org.apx.testing.core;
  */
 public enum Condition {
     VISIBLE,
-    PRESENT;
+    PRESENT
 }

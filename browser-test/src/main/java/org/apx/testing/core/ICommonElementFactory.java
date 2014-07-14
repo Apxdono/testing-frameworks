@@ -1,7 +1,6 @@
 package org.apx.testing.core;
 
 import org.apx.testing.elements.HtmlElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;

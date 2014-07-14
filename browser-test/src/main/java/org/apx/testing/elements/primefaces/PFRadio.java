@@ -7,20 +7,20 @@ import org.apx.testing.elements.interfaces.Selectable;
 /**
  * Created by oleg on 10.07.2014.
  */
-public class PFCheckbox extends Element<PFCheckbox, BaseEvent<PFCheckbox>> implements Selectable<PFCheckbox> {
+public class PFRadio extends Element<PFRadio,BaseEvent<PFRadio>> implements Selectable<PFRadio> {
 
     @Override
-    public PFCheckbox check() {
+    public PFRadio check() {
         return !hasClass("ui-state-active") ? event().click() : this;
     }
 
     @Override
-    public PFCheckbox uncheck() {
-        return hasClass("ui-state-active") ? event().click() : this;
+    public PFRadio uncheck() {
+        throw new UnsupportedOperationException("Radio button can't be unchecked by itself");
     }
 
     @Override
-    public PFCheckbox toggle() {
+    public PFRadio toggle() {
         return event().click();
     }
 
@@ -28,4 +28,5 @@ public class PFCheckbox extends Element<PFCheckbox, BaseEvent<PFCheckbox>> imple
     protected void initEvents() {
         events = new BaseEvent<>(this);
     }
+
 }

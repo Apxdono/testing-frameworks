@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class PFPickList extends Element<PFPickList, BaseEvent<PFPickList>> implements IPicklist<PFPickList,PFPicklistOption> {
 
-    static String SOURCE_SELECTOR = ".ui-picklist-source";
-    static String TARGET_SELECTOR = ".ui-picklist-target";
+    static final String SOURCE_SELECTOR = ".ui-picklist-source";
+    static final String TARGET_SELECTOR = ".ui-picklist-target";
 
 
     @Override

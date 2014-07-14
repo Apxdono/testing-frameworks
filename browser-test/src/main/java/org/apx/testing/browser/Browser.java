@@ -28,12 +28,12 @@ import java.util.concurrent.TimeUnit;
  * Entry point class for testing. Provides all tools for working with browser and elements.
  */
 public class Browser {
-    static Logger LOG = LoggerFactory.getLogger(Browser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Browser.class);
 
-    BrowserOptions options;
-    Properties properties;
-    WebDriver driver;
-    ICommonElementFactory el;
+    private final BrowserOptions options;
+    private final Properties properties;
+    private WebDriver driver;
+    private ICommonElementFactory el;
 
     private static class SingletonHolder {
         public static final Browser HOLDER_INSTANCE = new Browser().init();
@@ -44,6 +44,7 @@ public class Browser {
      *
      * @return instance
      */
+    @SuppressWarnings("SameReturnValue")
     public static Browser instance() {
         return SingletonHolder.HOLDER_INSTANCE;
     }
@@ -367,7 +368,7 @@ public class Browser {
         return this;
     }
 
-    protected WebDriver initDriver() {
+    WebDriver initDriver() {
         WebDriver result;
         switch (options.type) {
             case CHROME:
@@ -400,7 +401,7 @@ public class Browser {
     }
 
 
-    protected void manageShutdownOnJVMStop() {
+    void manageShutdownOnJVMStop() {
         if (options.closeOnJVMStop) {
             LOG.info("Shutdown will be managed in auto mode on jvm stop.");
             final Browser browser = this;

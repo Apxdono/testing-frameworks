@@ -3,7 +3,6 @@ package org.apx.testing.core;
 import org.apx.testing.browser.Browser;
 import org.apx.testing.elements.HtmlElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,9 +20,9 @@ import java.util.List;
  */
 public class ElementFactory implements ICommonElementFactory {
 
-    static Logger LOG = LoggerFactory.getLogger(ElementFactory.class);
-    static int DEFAULT_TIMEOUT = 5;
-    Browser browser;
+    static final Logger LOG = LoggerFactory.getLogger(ElementFactory.class);
+    static final int DEFAULT_TIMEOUT = 5;
+    final Browser browser;
 //    WebDriver driver;
     LinkedList<QueueAction> actions;
 

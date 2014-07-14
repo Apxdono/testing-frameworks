@@ -19,8 +19,8 @@ public class BrowserOptions {
 	static final String AJAX_PRE_WAIT_KEY = "ajax.initial.wait";
 	static final List<String> TRUES = Arrays.asList(new String[]{"true","1","yes","y","t"});
 
-	BrowserType type;
-	QueryType queryingType;
+	final BrowserType type;
+	final QueryType queryingType;
 	boolean remoteDriver = false;
 	boolean closeOnJVMStop = false;
 	boolean maximize = false;

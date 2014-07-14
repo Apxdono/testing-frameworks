@@ -6,10 +6,8 @@ import org.apx.testing.browser.ScriptLoader;
 import org.apx.testing.core.EFElement;
 import org.apx.testing.core.IBasicElementFactory;
 import org.openqa.selenium.WebElement;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

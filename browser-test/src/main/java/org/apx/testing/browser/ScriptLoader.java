@@ -12,9 +12,9 @@ import java.io.IOException;
  */
 public final class ScriptLoader {
 
-    static Logger LOG = LoggerFactory.getLogger(ScriptLoader.class);
-    static String JS_EXT = ".js";
-    static String CHECK_FUNCTION_EXISTS = "return window[arguments[0]] ? true : false;";
+    static final Logger LOG = LoggerFactory.getLogger(ScriptLoader.class);
+    static final String JS_EXT = ".js";
+    static final String CHECK_FUNCTION_EXISTS = "return window[arguments[0]] ? true : false;";
 
     /**
      * Load a js file with name equal to the function name, that is going to be used later.

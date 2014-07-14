@@ -8,7 +8,7 @@ import org.openqa.selenium.Keys;
  */
 public class BaseEvent<T extends Element> {
 
-    T target;
+    private final T target;
 
     public BaseEvent(T el){
         target = el;
