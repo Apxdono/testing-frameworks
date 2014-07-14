@@ -2,8 +2,6 @@ package org.apx.testing.elements.primefaces;
 
 import org.apx.testing.elements.BaseEvent;
 import org.apx.testing.elements.Element;
-import org.apx.testing.elements.HtmlElement;
-import org.apx.testing.elements.TableElement;
 import org.apx.testing.elements.interfaces.IOption;
 import org.apx.testing.elements.interfaces.IPicklist;
 

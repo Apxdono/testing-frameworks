@@ -123,17 +123,110 @@ public class Browser {
         return this;
     }
 
+    /**
+     * Switch to another browser page, popup, tab
+     * @param index 0-based index of the window
+     * @return self reference
+     */
     public Browser switchToTab(int index) {
         List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver = driver.switchTo().window(tabs.get(index));
         return this;
     }
 
+    /**
+     * Close the tab or page
+     * @param index 0-based index of the window
+     * @return self reference
+     */
+    public Browser closeTab(int index){
+        driver.switchTo().defaultContent();
+        String currentHandle = driver.getWindowHandle();
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(index)).close();
+        tabs.remove(index);
+        if(tabs.indexOf(currentHandle) != -1) {
+            driver = driver.switchTo().window(currentHandle);
+        } else {
+            if(index > 0){
+                prevTab();
+            } else if( index < tabs.size()-1){
+                nextTab();
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Switch to next tab relative to tab currently in use.
+     * @return self reference
+     */
+    public Browser nextTab(){
+        driver.switchTo().defaultContent();
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        int ind = tabs.indexOf(driver.getWindowHandle());
+        if(ind < tabs.size() - 1){
+            driver = driver.switchTo().window(tabs.get(ind+1));
+        }
+        return this;
+    }
+
+    /**
+     * Close next tab relative to tab currently in use.
+     * @return self reference
+     */
+    public Browser closeNextTab(){
+        driver.switchTo().defaultContent();
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        int ind = tabs.indexOf(driver.getWindowHandle());
+        if(ind < tabs.size() - 1){
+            closeTab(ind+1);
+        }
+        return this;
+    }
+
+    /**
+     * Switch to previous tab relative to tab currently in use.
+     * @return self reference
+     */
+    public Browser prevTab(){
+        driver.switchTo().defaultContent();
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        int ind = tabs.indexOf(driver.getWindowHandle());
+        if(ind > 0){
+            driver = driver.switchTo().window(tabs.get(ind-1));
+        }
+        return this;
+    }
+
+    /**
+     * Close previous tab relative to tab currently in use.
+     * @return self reference
+     */
+    public Browser closePrevTab(){
+        driver.switchTo().defaultContent();
+        List<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        int ind = tabs.indexOf(driver.getWindowHandle());
+        if(ind > 0){
+            closeTab(ind - 1);
+        }
+        return this;
+    }
+
+    /**
+     * Switch to next tab relative to tab currently in use.
+     * @return self reference
+     */
     public Browser switchToFrame(int index) {
         driver = driver.switchTo().frame(index);
         return this;
     }
 
+    /**
+     * Switch to frame using it's id.
+     * @param frame id
+     * @return self reference
+     */
     public Browser switchToFrame(String frame) {
         driver = driver.switchTo().frame(frame);
         return this;
@@ -152,6 +245,10 @@ public class Browser {
         return this;
     }
 
+    /**
+     * After manipulating with frame elements call this to switch back to the context of the root window
+     * @return self reference
+     */
     public Browser switchBackFromFrame() {
         driver = driver.switchTo().defaultContent();
         return this;
@@ -160,7 +257,6 @@ public class Browser {
 
     /**
      * Build a web driver wait
-     *
      * @param sec how long to wait
      * @return a valid wait object
      */
@@ -234,6 +330,7 @@ public class Browser {
         return this;
     }
 
+    //TODO test functionality
     public Browser waitForPageLoad() {
         ExpectedCondition<Boolean> pageLoadCondition = new
                 ExpectedCondition<Boolean>() {
@@ -246,6 +343,8 @@ public class Browser {
 
         return this;
     }
+
+
 
     /**
      * Initialize the browser

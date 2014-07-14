@@ -37,7 +37,7 @@ public class ElementsTest extends AbstractTest {
 
         //Fake ajax here. wait to submit result only after services panel is closed (aka ajax update style). Then clcik the wiki link 4 cheese
         b.js().executeScript(FAKE_AJAX);
-        servicesDiv.child(1).waitUntilElement(6).isHidden();
+        servicesDiv.child(2).waitUntilElement(6).isHidden();
         el.event().enter().browser().find().untilVisible(4).bySelector("#ires a:first-child").event().click();
 
     }
@@ -49,14 +49,14 @@ public class ElementsTest extends AbstractTest {
         SelectElement se = b.get(ELEMENTS_PAGE).find().bySelector("#f10").as(SelectElement.class);
         assertEquals(se.children(), se.options());
         assertEquals(se.child(1), se.options().get(0));
-        assertEquals(se.selectAt(0).val().trim(), "one");
+        assertEquals(se.selectAt(1).val().trim(), "one");
         LOG.info("Current value selected '{}'", se.val());
 
         //Go to w3schools at multiselect example page. click 'Try it !' and get the select
         b.get("http://www.w3schools.com/tags/att_select_multiple.asp").find().bySelector(".example a.tryitbtn").event().click();
         SelectElement seMul = b.switchToTab(1).switchToFrame("iframeResult").find().byName("cars").as(SelectElement.class);
-        assertEquals(seMul.selectAllAt(new int[]{0, 1, 3}).val().trim(), "volvo saab audi");
-        b.switchBackFromFrame();
+        assertEquals(seMul.selectAllAt(new int[]{1, 2, 4}).val().trim(), "volvo saab audi");
+        b.switchBackFromFrame().prevTab().closeTab(1);
     }
 
 

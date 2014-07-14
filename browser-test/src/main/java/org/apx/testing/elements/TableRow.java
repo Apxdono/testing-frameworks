@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by oleg on 08.07.2014.
  */
-public class TableRowElement extends Element<TableRowElement,BaseEvent<TableRowElement>> {
+public class TableRow extends Element<TableRow,BaseEvent<TableRow>> {
     @Override
     protected void initEvents() {
         events = new BaseEvent<>(this);
