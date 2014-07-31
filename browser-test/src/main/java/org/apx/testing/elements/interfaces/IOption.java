@@ -16,4 +16,8 @@ public interface IOption<SelfType> {
      * @return self reference
      */
     SelfType deselect();
+
+    String text();
+
+    String val();
 }

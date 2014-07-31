@@ -9,118 +9,8 @@ import java.util.List;
 /**
  * Implementation of 'select' element
  */
-public class SelectElement extends Element<SelectElement, BaseEvent<SelectElement>> implements ISelect<SelectElement, OptionElement> {
+public class SelectElement extends Select<SelectElement, BaseEvent<SelectElement>, OptionElement>{
 
-    List<OptionElement> options;
-
-    @Override
-    public SelectElement expand() {
-        return this.event().click();
-    }
-
-    @Override
-    public SelectElement select(IOption option) {
-        option.select();
-        return this;
-    }
-
-    @Override
-    public SelectElement selectAll(List<IOption> option) {
-        for (IOption iOption : option) {
-            iOption.select();
-        }
-        return this;
-    }
-
-    @Override
-    public SelectElement selectAt(int index) {
-        options().get(index-1).select();
-        return this;
-    }
-
-    @Override
-    public SelectElement selectAllAt(int[] indexes) {
-        for (int index : indexes) {
-            options().get(index-1).select();
-        }
-        return this;
-    }
-
-    @Override
-    public SelectElement selectByValue(String value) {
-        for (OptionElement optionElement : options()) {
-            if(value.equals(optionElement.val())){
-                optionElement.select();
-                break;
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public SelectElement selectAllByValue(String[] value) {
-        for (String s : value) {
-            for (OptionElement optionElement : options()) {
-                if(s.equals(optionElement.val())){
-                    optionElement.select();
-                    break;
-                }
-            }
-        }
-        return this;
-    }
-
-    @Override
-    public SelectElement selectByLabel(String value) {
-        for (OptionElement optionElement : options()) {
-            if(value.equals(optionElement.text())){
-                optionElement.select();
-                break;
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public SelectElement selectAllByLabel(String[] value) {
-        for (String s : value) {
-            for (OptionElement optionElement : options()) {
-                if(s.equals(optionElement.text())){
-                    optionElement.select();
-                    break;
-                }
-            }
-        }
-        return this;
-    }
-
-    @Override
-    public SelectElement selectAll() {
-        for (OptionElement optionElement : options()) {
-            optionElement.select();
-        }
-
-        return this;
-    }
-
-    @Override
-    public SelectElement deselectAll() {
-        for (OptionElement optionElement : options()) {
-            optionElement.deselect();
-        }
-
-        return this;
-    }
-
-    @Override
-    public List<OptionElement> options() {
-        if(options == null){
-            options = owner.find().allAs(this.find().bySelectorAll("option"), OptionElement.class);
-        }
-        return options;
-    }
 
     @Override
     protected void initEvents() {
@@ -137,13 +27,15 @@ public class SelectElement extends Element<SelectElement, BaseEvent<SelectElemen
         return super.val();
     }
 
+
+
     @Override
-    public SelectElement val(String value) {
-        throw new UnsupportedOperationException("Method not supported. Please use select methods provided in SelectElement class");
+    protected List<OptionElement> getOptions() {
+        return owner.find().allAs(find().bySelectorAll("option"),OptionElement.class);
     }
 
     @Override
-    public SelectElement val(String value, boolean append) {
-        throw new UnsupportedOperationException("Method not supported. Please use select methods provided in SelectElement class");
+    public SelectElement expand() {
+        return event().click();
     }
 }

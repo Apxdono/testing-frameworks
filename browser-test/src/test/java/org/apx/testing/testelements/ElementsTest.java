@@ -56,7 +56,7 @@ public class ElementsTest extends AbstractTest {
         b.get("http://www.w3schools.com/tags/att_select_multiple.asp").find().bySelector(".example a.tryitbtn").event().click();
         SelectElement seMul = b.switchToTab(1).switchToFrame("iframeResult").find().byName("cars").as(SelectElement.class);
         assertEquals(seMul.selectAllAt(new int[]{1, 2, 4}).val().trim(), "volvo saab audi");
-        b.switchBackFromFrame().prevTab().closeTab(1);
+        b.switchBackFromFrame().prevTab().closeNextTab();
     }
 
 
