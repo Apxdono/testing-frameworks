@@ -112,6 +112,15 @@ public abstract class Element<SelfType extends Element<SelfType, EV>, EV extends
     }
 
     /**
+     * Get element data attribute (like data-&lt;your attribute here&gt;
+     * @param dataAttribute name of attribute without data prefix
+     * @return attribute value
+     */
+    public String data(String dataAttribute){
+        return attr("data-"+dataAttribute);
+    }
+
+    /**
      * Get html text of current element
      * @return html text
      */

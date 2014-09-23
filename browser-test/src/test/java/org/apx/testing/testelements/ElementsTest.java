@@ -2,6 +2,7 @@ package org.apx.testing.testelements;
 
 import org.apx.testing.elements.HtmlElement;
 import org.apx.testing.elements.SelectElement;
+import org.apx.testing.utils.Props;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,11 @@ import static org.junit.Assert.*;
 public class ElementsTest extends AbstractTest {
     static String FAKE_AJAX = "setTimeout(function(){document.querySelector('#gbwa > div > a').click()},4000);";
     static String ELEMENTS_PAGE = "https://www.cs.tut.fi/~jkorpela/www/testel.html";
+
+    @Test
+    public void propertiesTest(){
+        LOG.info("Close when shut down: {}",Props.property("close.on.jvm.stop"));
+    }
 
     @Test
     public void browserTest() throws InterruptedException {

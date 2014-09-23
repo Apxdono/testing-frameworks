@@ -29,13 +29,22 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>2.42.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.opera</groupId>
             <artifactId>operadriver</artifactId>
             <version>1.5</version>
+            <scope>compile</scope>
         </dependency>
         <!--Selenium deps-->
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9-RC2</version>
+            <scope>compile</scope>
+        </dependency>
 
 
         <!--Logging deps-->
@@ -43,11 +52,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${logging.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${logging.version}</version>
+            <scope>compile</scope>
         </dependency>
         <!--Logging deps-->
 

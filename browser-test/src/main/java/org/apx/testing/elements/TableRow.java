@@ -12,16 +12,10 @@ public class TableRow extends Element<TableRow,BaseEvent<TableRow>> {
     }
 
     public List<HtmlElement> cells(){
-        return find().bySelectorAll("td");
-    }
-    public List<HtmlElement> headerCells(){
-        return find().bySelectorAll("th");
+        return children();
     }
 
     public HtmlElement cell(int index){
-        return find().bySelector(String.format("td:nth-child(%d)",index));
-    }
-    public HtmlElement headerCell(int index){
-        return find().bySelector(String.format("th:nth-child(%d)",index));
+        return child(index);
     }
 }

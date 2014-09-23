@@ -20,7 +20,7 @@ public class TableTests extends AbstractTest {
     public void tableTests() {
         b.get("http://www.w3schools.com/tags/tag_table.asp").find().bySelector(".example a.tryitbtn").event().click();
         Table t = b.nextTab().switchToFrame("iframeResult").find().bySelector("table").as(Table.class);
-        assertEquals(t.headerCell(1, 1).text(), "Month");
+        assertEquals(t.searchContext(Table.Context.TBODY).contextIndex(1).captionCell(1, 1).text(), "Month");
 
         assertThat("January", allOf(equalTo(t.row(2).cell(1).text()), equalTo(t.cell(2, 1).text())));
         assertEquals(t.cell(2, 1), t.row(2).cell(1));
@@ -37,7 +37,8 @@ public class TableTests extends AbstractTest {
 
         int i = 0;
         for (TableRow tr : t.rows()) {
-            List<HtmlElement> cols =  i++ == 0 ? tr.headerCells() : tr.cells();
+            i++;
+            List<HtmlElement> cols = tr.cells();
             LOG.info("{}\t{}\t{}",i,cols.get(0).text(),cols.get(1).text());
         }
 	    b.switchBackFromFrame().prevTab().closeNextTab();

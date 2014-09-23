@@ -6,6 +6,7 @@ import org.apx.testing.core.ICommonElementFactory;
 import org.apx.testing.elements.HtmlElement;
 import org.apx.testing.utils.Messages;
 import org.apx.testing.utils.PropertiesLoader;
+import org.apx.testing.utils.Props;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -75,6 +76,7 @@ public class Browser {
      */
     public Browser get(String url) {
         driver.get(url);
+        waitForPageLoad();
         return this;
     }
 
@@ -168,6 +170,9 @@ public class Browser {
         int ind = tabs.indexOf(driver.getWindowHandle());
         if(ind < tabs.size() - 1){
             driver = driver.switchTo().window(tabs.get(ind+1));
+            //Sometimes this piece of shit doesn't see that window is opened, so it needs to wait a bit.
+            //The window handle is present tho..
+            holdInMillis(500);
         }
         return this;
     }
@@ -196,6 +201,9 @@ public class Browser {
         int ind = tabs.indexOf(driver.getWindowHandle());
         if(ind > 0){
             driver = driver.switchTo().window(tabs.get(ind-1));
+            //Sometimes this piece of shit doesn't see that window is opened, so it needs to wait a bit.
+            //The window handle is present tho..
+            holdInMillis(500);
         }
         return this;
     }
@@ -331,17 +339,33 @@ public class Browser {
         return this;
     }
 
+    public Browser waitForPageLoad(){
+        return waitForPageLoad(10);
+    }
+
     //TODO test functionality
-    public Browser waitForPageLoad() {
+    public Browser waitForPageLoad(int seconds) {
+        final String[] state = {""};
         ExpectedCondition<Boolean> pageLoadCondition = new
                 ExpectedCondition<Boolean>() {
                     public Boolean apply(WebDriver driver) {
-                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+
+                        try {
+                            state[0] = (((JavascriptExecutor) driver).executeScript("return document.readyState")+"").toLowerCase();
+                        } catch (Exception e) {
+                            //Ignoring bullshit
+                        }
+                        return "complete".equals(state[0]) || "loaded".equals(state[0]);
                     }
                 };
 
-        getWait(10).until(pageLoadCondition);
-
+        try {
+            getWait(seconds).until(pageLoadCondition);
+        } catch (TimeoutException te){
+            if(!"interactive".equals(state[0])){
+                throw te;
+            }
+        }
         return this;
     }
 

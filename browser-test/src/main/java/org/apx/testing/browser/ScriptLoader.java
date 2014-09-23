@@ -1,11 +1,16 @@
 package org.apx.testing.browser;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.lf5.util.ResourceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Loads scripts from classpath into browser 'window' DOM element.
@@ -44,9 +49,10 @@ public final class ScriptLoader {
      * @throws IOException if file could not be read or missing
      */
     protected static String getScriptAsString(String functionName) throws IOException {
-        File f = new File(ScriptLoader.class.getResource("/" + functionName + JS_EXT).getPath());
-        LOG.debug("File found: {}", f != null);
-        return FileUtils.readFileToString(f, "UTF-8");
+        InputStream is = ScriptLoader.class.getClassLoader().getResourceAsStream(functionName + JS_EXT);
+        LOG.debug("File found: {}", is != null);
+        List<String> lines = IOUtils.readLines(is,"UTF-8");
+        return StringUtils.join(lines,"");
     }
 
 }
